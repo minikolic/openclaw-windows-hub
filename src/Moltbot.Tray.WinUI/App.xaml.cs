@@ -157,13 +157,26 @@ public partial class App : Application
         // Don't set e.Flyout - we're handling it ourselves
     }
 
-    private void ShowTrayMenuPopup()
+    private async void ShowTrayMenuPopup()
     {
         // Close any existing menu
         if (_trayMenuWindow != null)
         {
             try { _trayMenuWindow.Close(); } catch { }
             _trayMenuWindow = null;
+        }
+
+        // Pre-fetch latest data before showing menu
+        if (_gatewayClient != null && _currentStatus == ConnectionStatus.Connected)
+        {
+            try
+            {
+                _ = _gatewayClient.CheckHealthAsync();
+                _ = _gatewayClient.RequestSessionsAsync();
+                _ = _gatewayClient.RequestUsageAsync();
+                await Task.Delay(150); // Brief wait for data
+            }
+            catch { /* ignore - show cached data */ }
         }
 
         _trayMenuWindow = new TrayMenuWindow();
@@ -226,7 +239,7 @@ public partial class App : Application
             menu.AddMenuItem(_lastUsage.DisplayText, "📊", "", isEnabled: false);
         }
 
-        // Sessions
+        // Sessions (if any) - show meaningful info like the WinForms version
         if (_lastSessions.Length > 0)
         {
             menu.AddSeparator();
@@ -234,11 +247,31 @@ public partial class App : Application
 
             foreach (var session in _lastSessions.Take(5))
             {
-                menu.AddMenuItem($"  {session.DisplayText}", null, $"session:{session.Key}");
+                // Extract session type from key like "agent:main:cron:uuid" or "agent:main:subagent:uuid"
+                var parts = session.Key.Split(':');
+                var sessionType = parts.Length >= 3 ? parts[2] : "session";
+                var displayName = sessionType switch
+                {
+                    "main" => "Main Agent",
+                    "cron" => "Scheduled Task",
+                    "subagent" => "Sub-Agent",
+                    _ => sessionType.Length > 0 ? char.ToUpper(sessionType[0]) + sessionType[1..] : "Session"
+                };
+                
+                // Add model if available
+                if (!string.IsNullOrEmpty(session.Model))
+                    displayName += $" ({session.Model})";
+                else if (!string.IsNullOrEmpty(session.Channel))
+                    displayName += $" · {session.Channel}";
+                    
+                var icon = session.IsMain ? "⭐" : "•";
+                menu.AddMenuItem(displayName, icon, $"session:{session.Key}", isEnabled: false, indent: true);
             }
+            if (_lastSessions.Length > 5)
+                menu.AddMenuItem($"+{_lastSessions.Length - 5} more...", "", "", isEnabled: false, indent: true);
         }
 
-        // Channels
+        // Channels (if any)
         if (_lastChannels.Length > 0)
         {
             menu.AddSeparator();
@@ -246,13 +279,19 @@ public partial class App : Application
 
             foreach (var channel in _lastChannels)
             {
-                var channelIcon = channel.Status?.ToLowerInvariant() switch
+                var rawStatus = channel.Status?.ToLowerInvariant() ?? "";
+                
+                // Match status logic from WinForms version
+                var channelIcon = rawStatus switch
                 {
-                    "ok" or "connected" or "running" => "🟢",
-                    "connecting" or "reconnecting" => "🟡",
-                    _ => "🔴"
+                    "ok" or "connected" or "running" or "active" or "ready" => "🟢",
+                    "stopped" or "idle" or "paused" or "configured" or "pending" => "🟡",
+                    "error" or "disconnected" or "failed" => "🔴",
+                    _ => "⚪"
                 };
-                menu.AddMenuItem(channel.Name, channelIcon, $"channel:{channel.Name}", indent: true);
+                
+                var channelName = char.ToUpper(channel.Name[0]) + channel.Name[1..];
+                menu.AddMenuItem(channelName, channelIcon, $"channel:{channel.Name}", indent: true);
             }
         }
 
