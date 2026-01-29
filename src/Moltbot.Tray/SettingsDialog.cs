@@ -140,7 +140,7 @@ public partial class SettingsDialog : Form
 
         _globalHotkeyCheckBox = new CheckBox
         {
-            Text = "Global hotkey (Ctrl+Shift+Space → Quick Send)",
+            Text = "Global hotkey (Ctrl+Alt+Shift+C → Quick Send)",
             Location = new Point(12, y),
             Size = new Size(340, 22),
             Font = labelFont

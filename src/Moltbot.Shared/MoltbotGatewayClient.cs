@@ -49,9 +49,13 @@ public class MoltbotGatewayClient : IDisposable
 
             _webSocket = new ClientWebSocket();
             _webSocket.Options.KeepAliveInterval = TimeSpan.FromSeconds(30);
-            // Set Origin header to localhost to satisfy secure context check
-            _webSocket.Options.SetRequestHeader("Origin", "http://localhost:18789");
+            
+            // Set Origin header based on gateway URL (convert ws/wss to http/https)
             var uri = new Uri(_gatewayUrl);
+            var originScheme = uri.Scheme == "wss" ? "https" : "http";
+            var origin = $"{originScheme}://{uri.Host}:{uri.Port}";
+            _webSocket.Options.SetRequestHeader("Origin", origin);
+            
             await _webSocket.ConnectAsync(uri, _cts.Token);
 
             _reconnectAttempts = 0;
