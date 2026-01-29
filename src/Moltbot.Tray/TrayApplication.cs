@@ -731,7 +731,7 @@ public class TrayApplication : ApplicationContext
             var logDir = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "MoltbotTray");
-            var logPath = System.IO.Path.Combine(logDir, "clawdbot-tray.log");
+            var logPath = System.IO.Path.Combine(logDir, "moltbot-tray.log");
 
             if (System.IO.File.Exists(logPath))
             {
@@ -802,4 +802,5 @@ public class TrayApplication : ApplicationContext
         base.ExitThreadCore();
     }
 }
+
 

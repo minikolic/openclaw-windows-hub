@@ -7,14 +7,14 @@ namespace MoltbotTray;
 
 /// <summary>
 /// Simple file + debug logger for troubleshooting.
-/// Writes to %LOCALAPPDATA%\MoltbotTray\clawdbot-tray.log
+/// Writes to %LOCALAPPDATA%\MoltbotTray\moltbot-tray.log
 /// </summary>
 public static class Logger
 {
     private static readonly string LogDir = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
         "MoltbotTray");
-    private static readonly string LogPath = Path.Combine(LogDir, "clawdbot-tray.log");
+    private static readonly string LogPath = Path.Combine(LogDir, "moltbot-tray.log");
     private static readonly object Lock = new();
     private static bool _initialized;
     private static StreamWriter? _writer;
@@ -103,4 +103,5 @@ public static class Logger
         }
     }
 }
+
 

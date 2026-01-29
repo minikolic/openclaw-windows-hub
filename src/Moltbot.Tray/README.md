@@ -1,6 +1,6 @@
-# Clawdbot Windows Tray
+# Moltbot Windows Tray
 
-A Windows system tray companion for [Clawdbot](https://github.com/clawdbot/clawdbot) — the Windows equivalent of the macOS menu bar app. Provides desktop notifications, embedded chat, live agent activity monitoring, and gateway status tracking.
+A Windows system tray companion for [Moltbot](https://github.com/Moltbot/Moltbot) — the Windows equivalent of the macOS menu bar app. Provides desktop notifications, embedded chat, live agent activity monitoring, and gateway status tracking.
 
 ## Features
 
@@ -56,15 +56,15 @@ A Windows system tray companion for [Clawdbot](https://github.com/clawdbot/clawd
 - **Esc** — Cancel Quick Send
 
 ### Deep Links
-- Registers `clawdbot://` URI scheme
-- `clawdbot://agent?message=Hello` sends a message to the agent
+- Registers `Moltbot://` URI scheme
+- `Moltbot://agent?message=Hello` sends a message to the agent
 - Confirmation prompt for safety (bypass with `key` parameter)
 
 ### Quality of Life
 - **ARM64 support** — native builds for Windows on ARM
 - **Auto-start** via Windows Registry
 - **Exponential backoff** on reconnect (1s → 60s)
-- **File logging** to `%LOCALAPPDATA%\ClawdbotTray\clawdbot-tray.log` (with rotation at 1MB)
+- **File logging** to `%LOCALAPPDATA%\MoltbotTray\moltbot-tray.log` (with rotation at 1MB)
 - **Open Log File** menu item for quick debugging
 - **Single instance** enforcement (mutex)
 - **Proper GDI handle cleanup** (no icon leaks)
@@ -75,14 +75,14 @@ A Windows system tray companion for [Clawdbot](https://github.com/clawdbot/clawd
 - Windows 10 version 1903+ (for toast notifications)
 - .NET 9 Runtime (included in self-contained builds)
 - [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) (for chat panel)
-- Clawdbot gateway running (typically in WSL2)
+- Moltbot gateway running (typically in WSL2)
 
 ## Quick Start
 
-1. Download the latest release from [Releases](https://github.com/shanselman/clawdbot-windows-tray/releases)
+1. Download the latest release from [Releases](https://github.com/shanselman/Moltbot-windows-tray/releases)
    - **x64**: For Intel/AMD processors
    - **arm64**: For Windows on ARM (e.g., Surface Pro X, Snapdragon laptops)
-2. Run `ClawdbotTray.exe`
+2. Run `MoltbotTray.exe`
 3. Right-click tray icon → Settings
 4. Enter gateway URL (`ws://localhost:18789`) and your token
 5. Done — you'll see the icon turn green when connected
@@ -91,16 +91,16 @@ A Windows system tray companion for [Clawdbot](https://github.com/clawdbot/clawd
 
 ```bash
 # In WSL2:
-cat ~/.clawdbot/clawdbot.json | grep token
+cat ~/.Moltbot/Moltbot.json | grep token
 # Or:
-clawdbot config get gateway.auth.token
+Moltbot config get gateway.auth.token
 ```
 
 ## Build from Source
 
 ```bash
-git clone https://github.com/shanselman/clawdbot-windows-tray.git
-cd clawdbot-windows-tray
+git clone https://github.com/shanselman/Moltbot-windows-tray.git
+cd Moltbot-windows-tray
 
 # Windows — auto-detects architecture
 build.bat
@@ -122,23 +122,23 @@ dotnet build -p:EnableWindowsTargeting=true -r win-x64
 ```
 ├── Program.cs                    # Entry point, single instance, deep link registration
 ├── TrayApplication.cs            # Tray icon, menu, event wiring, UI updates
-├── ClawdbotGatewayClient.cs      # WebSocket client, protocol v3, event parsing, state tracking
+├── MoltbotGatewayClient.cs      # WebSocket client, protocol v3, event parsing, state tracking
 ├── WebChatForm.cs                # WebView2 chat panel (singleton, dark mode)
 ├── QuickSendDialog.cs            # Quick message input (Enter to send, TopMost)
 ├── StatusDetailForm.cs           # Rich status detail view (dark theme)
 ├── NotificationHistoryForm.cs    # Scrollable notification history
 ├── GlobalHotkey.cs               # Ctrl+Shift+Space system-wide hotkey
-├── DeepLinkHandler.cs            # clawdbot:// URI scheme handler
+├── DeepLinkHandler.cs            # Moltbot:// URI scheme handler
 ├── SettingsManager.cs            # JSON config with notification filters
 ├── SettingsDialog.cs             # Settings UI (connection, startup, notification filters)
 ├── AutoStartManager.cs           # Windows Registry auto-start
 ├── Logger.cs                     # File + debug logger with rotation
-└── ClawdbotTray.csproj           # .NET 9, Windows Forms, WebView2
+└── MoltbotTray.csproj           # .NET 9, Windows Forms, WebView2
 ```
 
 ## macOS Parity Status
 
-This Windows tray app aims for feature parity with the [Clawdbot macOS menu bar app](https://github.com/clawdbot/clawdbot-macos).
+This Windows tray app aims for feature parity with the [Moltbot macOS menu bar app](https://github.com/Moltbot/Moltbot-macos).
 
 | Feature | macOS | Windows | Notes |
 |---------|:-----:|:-------:|-------|
@@ -154,7 +154,7 @@ This Windows tray app aims for feature parity with the [Clawdbot macOS menu bar 
 | Channel health display | ✅ | ✅ | Telegram, WhatsApp status |
 | Session awareness (main/sub) | ✅ | ✅ | Live session tracking |
 | Usage/token display | ✅ | ✅ | Input/output/total |
-| Deep link URI scheme | ✅ | ✅ | `clawdbot://` |
+| Deep link URI scheme | ✅ | ✅ | `Moltbot://` |
 | Global hotkey | — | ✅ | Ctrl+Shift+Space |
 | Auto-start | ✅ | ✅ | Registry-based |
 | Quick send | ✅ | ✅ | Fire-and-forget to main session |
@@ -171,7 +171,7 @@ This Windows tray app aims for feature parity with the [Clawdbot macOS menu bar 
 
 ## Settings
 
-Settings are stored in `%APPDATA%\ClawdbotTray\settings.json`:
+Settings are stored in `%APPDATA%\MoltbotTray\settings.json`:
 
 ```json
 {
@@ -195,8 +195,8 @@ Settings are stored in `%APPDATA%\ClawdbotTray\settings.json`:
 ## Troubleshooting
 
 **Can't connect?**
-- Check gateway: `clawdbot gateway status` in WSL2
-- Verify token matches `~/.clawdbot/clawdbot.json`
+- Check gateway: `Moltbot gateway status` in WSL2
+- Verify token matches `~/.Moltbot/Moltbot.json`
 - Try WSL2 IP directly: `ws://<wsl-ip>:18789` (`wsl hostname -I`)
 
 **No notifications?**
@@ -206,7 +206,7 @@ Settings are stored in `%APPDATA%\ClawdbotTray\settings.json`:
 
 **WebChat blank?**
 - Install [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
-- Check logs: `%LOCALAPPDATA%\ClawdbotTray\clawdbot-tray.log`
+- Check logs: `%LOCALAPPDATA%\MoltbotTray\moltbot-tray.log`
 - Right-click tray → Open Log File
 
 **Global hotkey not working?**
@@ -222,4 +222,5 @@ MIT
 
 - Built with .NET 9, Windows Forms, and [WebView2](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 - Toast notifications via [Microsoft.Toolkit.Uwp.Notifications](https://github.com/CommunityToolkit/WindowsCommunityToolkit)
-- Part of the [Clawdbot](https://github.com/clawdbot/clawdbot) ecosystem
+- Part of the [Moltbot](https://github.com/Moltbot/Moltbot) ecosystem
+

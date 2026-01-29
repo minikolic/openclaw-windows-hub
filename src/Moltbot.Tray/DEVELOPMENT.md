@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-This Windows system tray application is built with .NET 9 and Windows Forms, designed to be lightweight and efficient while providing seamless integration with the Clawdbot gateway. It mirrors the macOS menu bar app's functionality for Windows users.
+This Windows system tray application is built with .NET 9 and Windows Forms, designed to be lightweight and efficient while providing seamless integration with the Moltbot gateway. It mirrors the macOS menu bar app's functionality for Windows users.
 
 ### Component Architecture
 
@@ -16,7 +16,7 @@ This Windows system tray application is built with .NET 9 and Windows Forms, des
                      └────────┬────────────────┘
                               │ events
                      ┌────────▼────────────────┐
-                     │  ClawdbotGatewayClient   │
+                     │  MoltbotGatewayClient   │
                      │  - WebSocket connection  │
                      │  - Protocol v3 handshake │
                      │  - Event parsing         │
@@ -31,11 +31,11 @@ This Windows system tray application is built with .NET 9 and Windows Forms, des
 |-----------|------|---------|
 | **Program** | `Program.cs` | Entry point, single-instance mutex, URI scheme registration |
 | **TrayApplication** | `TrayApplication.cs` | Main `ApplicationContext` managing the tray icon, context menu, and UI event dispatch |
-| **ClawdbotGatewayClient** | `ClawdbotGatewayClient.cs` | WebSocket client implementing gateway protocol v3 with event parsing, session tracking, and usage monitoring |
-| **SettingsManager** | `SettingsManager.cs` | JSON-based settings persistence in `%APPDATA%\ClawdbotTray\` |
+| **MoltbotGatewayClient** | `MoltbotGatewayClient.cs` | WebSocket client implementing gateway protocol v3 with event parsing, session tracking, and usage monitoring |
+| **SettingsManager** | `SettingsManager.cs` | JSON-based settings persistence in `%APPDATA%\MoltbotTray\` |
 | **SettingsDialog** | `SettingsDialog.cs` | Settings UI with URL/token config, test connection (with timeout), and notification preferences |
-| **Logger** | `Logger.cs` | Thread-safe file + debug logger with automatic rotation (1MB), writes to `%LOCALAPPDATA%\ClawdbotTray\clawdbot-tray.log` |
-| **DeepLinkHandler** | `DeepLinkHandler.cs` | `clawdbot://` URI scheme registration and processing for cross-app integration |
+| **Logger** | `Logger.cs` | Thread-safe file + debug logger with automatic rotation (1MB), writes to `%LOCALAPPDATA%\MoltbotTray\moltbot-tray.log` |
+| **DeepLinkHandler** | `DeepLinkHandler.cs` | `Moltbot://` URI scheme registration and processing for cross-app integration |
 | **WebChatForm** | `WebChatForm.cs` | WebView2-based chat panel (singleton) with toolbar, fallback to browser |
 | **QuickSendDialog** | `QuickSendDialog.cs` | Lightweight dialog for sending messages (supports Ctrl+Enter) |
 | **StatusDetailForm** | `StatusDetailForm.cs` | Rich status view showing gateway connection, sessions, channels, usage, and app info |
@@ -93,7 +93,7 @@ An activity badge (small corner dot) appears during tool execution:
 
 ### Settings Storage
 
-Settings are stored as JSON in `%APPDATA%\ClawdbotTray\settings.json`:
+Settings are stored as JSON in `%APPDATA%\MoltbotTray\settings.json`:
 
 ```json
 {
@@ -107,10 +107,10 @@ Settings are stored as JSON in `%APPDATA%\ClawdbotTray\settings.json`:
 
 ### Deep Links
 
-The app registers `clawdbot://` URI scheme for cross-app integration:
+The app registers `Moltbot://` URI scheme for cross-app integration:
 
 ```
-clawdbot://agent?message=Hello&key=optional-auth-key
+Moltbot://agent?message=Hello&key=optional-auth-key
 ```
 
 Without a key, the user is prompted before sending. With a key, the message is sent directly.
@@ -140,7 +140,7 @@ dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
 GitHub Actions builds on every push. Check status:
 
 ```bash
-gh run list --repo shanselman/clawdbot-windows-tray --limit 1
+gh run list --repo shanselman/Moltbot-windows-tray --limit 1
 ```
 
 ## Dependencies
@@ -165,3 +165,4 @@ gh run list --repo shanselman/clawdbot-windows-tray --limit 1
 - WebView2 Runtime must be installed separately for chat panel
 - Single-instance enforced via Mutex (deep link forwarding to running instance TODO)
 - Tray icon tooltip limited to 63 characters (full detail shown in context menu activity row)
+

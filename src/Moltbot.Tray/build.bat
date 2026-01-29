@@ -34,7 +34,7 @@ if errorlevel 1 goto :error
 echo.
 echo ===================================
 echo  Build complete!
-echo  Output: publish\ClawdbotTray.exe
+echo  Output: publish\MoltbotTray.exe
 echo  Architecture: %RID%
 echo ===================================
 goto :end
@@ -46,3 +46,4 @@ exit /b 1
 
 :end
 endlocal
+
