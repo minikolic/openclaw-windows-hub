@@ -5,5 +5,6 @@
     </Project>
     <Project Path="src/Moltbot.Shared/Moltbot.Shared.csproj" />
     <Project Path="src/Moltbot.Tray/Moltbot.Tray.csproj" />
+    <Project Path="src/Moltbot.Tray.WinUI/Moltbot.Tray.WinUI.csproj" />
   </Folder>
 </Solution>
