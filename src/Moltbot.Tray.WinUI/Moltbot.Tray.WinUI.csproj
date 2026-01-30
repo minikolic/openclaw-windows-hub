@@ -11,6 +11,8 @@
     <ApplicationIcon>Assets\moltbot.ico</ApplicationIcon>
     <RootNamespace>MoltbotTray</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Bundle Windows App SDK so users don't need to install it separately -->
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
 
   <ItemGroup>
