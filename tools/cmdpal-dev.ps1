@@ -9,7 +9,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $RepoRoot = Split-Path -Parent $PSScriptRoot
-$ProjectPath = "$RepoRoot\src\Moltbot.CommandPalette"
+$ProjectPath = "$RepoRoot\src\OpenClaw.CommandPalette"
 
 # Detect architecture
 $Arch = if ([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture -eq 'Arm64') { 'arm64' } else { 'x64' }
@@ -18,7 +18,7 @@ $OutputPath = "$ProjectPath\bin\$Arch\Debug\net10.0-windows10.0.26100.0\win-$Arc
 function Write-Step($msg) { Write-Host "`n>> $msg" -ForegroundColor Cyan }
 
 function Get-InstalledPackage {
-    Get-AppxPackage -Name "*Moltbot*" 2>$null
+    Get-AppxPackage -Name "*OpenClaw*" 2>$null
 }
 
 function Remove-ExtensionPackage {
@@ -35,7 +35,7 @@ function Remove-ExtensionPackage {
 function Build-Extension {
     Write-Step "Building Command Palette ($Arch)..."
     Push-Location $RepoRoot
-    dotnet build src/Moltbot.CommandPalette -c Debug -p:Platform=$Arch
+    dotnet build src/OpenClaw.CommandPalette -c Debug -p:Platform=$Arch
     if ($LASTEXITCODE -ne 0) { throw "Build failed" }
     Pop-Location
     Write-Host "Build succeeded!" -ForegroundColor Green
@@ -51,7 +51,7 @@ function Deploy-Extension {
     
     # Register for development (loose files, no MSIX needed)
     Add-AppxPackage -Register $manifest -ForceApplicationShutdown
-    Write-Host "Deployed! Open Command Palette, type 'Reload', then 'Moltbot'" -ForegroundColor Green
+    Write-Host "Deployed! Open Command Palette, type 'Reload', then 'OpenClaw'" -ForegroundColor Green
 }
 
 function Show-Status {
@@ -76,6 +76,6 @@ switch ($Action) {
         Remove-ExtensionPackage
         Build-Extension
         Deploy-Extension
-        Write-Host "`n=== In Command Palette: type 'Reload' then 'Moltbot' ===" -ForegroundColor Magenta
+        Write-Host "`n=== In Command Palette: type 'Reload' then 'OpenClaw' ===" -ForegroundColor Magenta
     }
 }

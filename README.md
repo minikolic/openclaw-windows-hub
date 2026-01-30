@@ -1,6 +1,6 @@
-# 🦞 Moltbot Windows Hub
+# 🦞 OpenClaw Windows Hub
 
-A Windows companion suite for [Moltbot](https://moltbot.com) - the AI-powered personal assistant.
+A Windows companion suite for [OpenClaw](https://moltbot.com) - the AI-powered personal assistant.
 
 *Made with 🦞 love by Scott Hanselman and Molty*
 
@@ -14,9 +14,9 @@ This monorepo contains three projects:
 
 | Project | Description |
 |---------|-------------|
-| **Moltbot.Tray** | System tray application for quick access to Moltbot |
-| **Moltbot.Shared** | Shared gateway client library |
-| **Moltbot.CommandPalette** | PowerToys Command Palette extension |
+| **OpenClaw.Tray** | System tray application for quick access to OpenClaw |
+| **OpenClaw.Shared** | Shared gateway client library |
+| **OpenClaw.CommandPalette** | PowerToys Command Palette extension |
 
 ## 🚀 Quick Start
 
@@ -32,12 +32,12 @@ dotnet build
 
 ### Run Tray App
 ```bash
-dotnet run --project src/Moltbot.Tray
+dotnet run --project src/OpenClaw.Tray
 ```
 
-## 📦 Moltbot.Tray (Molty)
+## 📦 OpenClaw.Tray (Molty)
 
-Modern Windows 11-style system tray companion that connects to your local Moltbot gateway.
+Modern Windows 11-style system tray companion that connects to your local OpenClaw gateway.
 
 ### Features
 - 🦞 **Lobster branding** - Pixel-art lobster tray icon with status colors
@@ -90,28 +90,28 @@ These features are available in Windows but not in the Mac app:
 | Toast notifications | Clickable Windows notifications |
 | Channel control | Start/stop Telegram & WhatsApp |
 | Modern flyout menu | Windows 11-style with dark/light mode |
-| Deep links | `moltbot://` URL scheme with IPC |
+| Deep links | `openclaw://` URL scheme with IPC |
 | First-run welcome | Guided onboarding for new users |
 | PowerToys integration | Command Palette extension |
 
 ### Deep Links
 
-Moltbot registers the `moltbot://` URL scheme for automation and integration:
+OpenClaw registers the `openclaw://` URL scheme for automation and integration:
 
 | Link | Description |
 |------|-------------|
-| `moltbot://settings` | Open Settings dialog |
-| `moltbot://chat` | Open Web Chat window |
-| `moltbot://dashboard` | Open Dashboard in browser |
-| `moltbot://dashboard/sessions` | Open specific dashboard page |
-| `moltbot://send?message=Hello` | Open Quick Send with pre-filled text |
-| `moltbot://agent?message=Hello` | Send message directly (with confirmation) |
+| `openclaw://settings` | Open Settings dialog |
+| `openclaw://chat` | Open Web Chat window |
+| `openclaw://dashboard` | Open Dashboard in browser |
+| `openclaw://dashboard/sessions` | Open specific dashboard page |
+| `openclaw://send?message=Hello` | Open Quick Send with pre-filled text |
+| `openclaw://agent?message=Hello` | Send message directly (with confirmation) |
 
 Deep links work even when Molty is already running - they're forwarded via IPC.
 
-## 📦 Moltbot.CommandPalette
+## 📦 OpenClaw.CommandPalette
 
-PowerToys Command Palette extension for quick Moltbot access.
+PowerToys Command Palette extension for quick OpenClaw access.
 
 ### Commands
 - **🦞 Open Dashboard** - Launch web dashboard
@@ -125,13 +125,13 @@ PowerToys Command Palette extension for quick Moltbot access.
 1. Build the solution in Release mode
 2. Deploy the MSIX package via Visual Studio
 3. Open Command Palette (Win+Alt+Space)
-4. Type "Moltbot" to see commands
+4. Type "OpenClaw" to see commands
 
-## 📦 Moltbot.Shared
+## 📦 OpenClaw.Shared
 
 Shared library containing:
-- `MoltbotGatewayClient` - WebSocket client for gateway protocol
-- `IMoltbotLogger` - Logging interface
+- `OpenClawGatewayClient` - WebSocket client for gateway protocol
+- `IOpenClawLogger` - Logging interface
 - Data models (SessionInfo, ChannelHealth, etc.)
 - Channel control (start/stop channels via gateway)
 
@@ -141,9 +141,9 @@ Shared library containing:
 ```
 moltbot-windows-hub/
 ├── src/
-│   ├── Moltbot.Shared/           # Shared gateway library
-│   ├── Moltbot.Tray/             # System tray app
-│   └── Moltbot.CommandPalette/   # PowerToys extension
+│   ├── OpenClaw.Shared/           # Shared gateway library
+│   ├── OpenClaw.Tray/             # System tray app
+│   └── OpenClaw.CommandPalette/   # PowerToys extension
 ├── docs/
 │   └── molty1.png                # Screenshot
 ├── moltbot-windows-hub.sln
@@ -155,8 +155,8 @@ moltbot-windows-hub/
 ### Configuration
 
 Settings are stored in:
-- Settings: `%APPDATA%\MoltbotTray\settings.json`
-- Logs: `%LOCALAPPDATA%\MoltbotTray\moltbot-tray.log`
+- Settings: `%APPDATA%\OpenClawTray\settings.json`
+- Logs: `%LOCALAPPDATA%\OpenClawTray\openclaw-tray.log`
 
 Default gateway: `ws://localhost:18789`
 
@@ -170,3 +170,7 @@ On first run without a token, Molty displays a welcome dialog that:
 ## License
 
 MIT License - see [LICENSE](LICENSE)
+
+---
+
+*Formerly known as Moltbot, formerly known as Clawdbot*

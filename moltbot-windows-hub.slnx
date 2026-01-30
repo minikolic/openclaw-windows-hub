@@ -1,10 +1,10 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/Moltbot.CommandPalette/Moltbot.CommandPalette.csproj">
+    <Project Path="src/OpenClaw.CommandPalette/OpenClaw.CommandPalette.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="src/Moltbot.Shared/Moltbot.Shared.csproj" />
-    <Project Path="src/Moltbot.Tray/Moltbot.Tray.csproj" />
-    <Project Path="src/Moltbot.Tray.WinUI/Moltbot.Tray.WinUI.csproj" />
+    <Project Path="src/OpenClaw.Shared/OpenClaw.Shared.csproj" />
+    <Project Path="src/OpenClaw.Tray/OpenClaw.Tray.csproj" />
+    <Project Path="src/OpenClaw.Tray.WinUI/OpenClaw.Tray.WinUI.csproj" />
   </Folder>
 </Solution>

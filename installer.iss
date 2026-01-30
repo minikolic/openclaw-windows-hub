@@ -1,8 +1,8 @@
-; Moltbot Tray Inno Setup Script (WinUI version)
-#define MyAppName "Moltbot Tray"
+; OpenClaw Tray Inno Setup Script (WinUI version)
+#define MyAppName "OpenClaw Tray"
 #define MyAppPublisher "Scott Hanselman"
 #define MyAppURL "https://github.com/shanselman/moltbot-windows-hub"
-#define MyAppExeName "Moltbot.Tray.WinUI.exe"
+#define MyAppExeName "OpenClaw.Tray.WinUI.exe"
 
 ; MyAppArch should be passed via /DMyAppArch=x64 or /DMyAppArch=arm64
 #ifndef MyAppArch
@@ -17,15 +17,15 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL=https://github.com/shanselman/moltbot-windows-hub/issues
 AppUpdatesURL=https://github.com/shanselman/moltbot-windows-hub/releases
-DefaultDirName={localappdata}\MoltbotTray
+DefaultDirName={localappdata}\OpenClawTray
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-OutputBaseFilename=MoltbotTray-Setup-{#MyAppArch}
+OutputBaseFilename=OpenClawTray-Setup-{#MyAppArch}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 PrivilegesRequired=lowest
-SetupIconFile=src\Moltbot.Tray.WinUI\Assets\moltbot.ico
+SetupIconFile=src\OpenClaw.Tray.WinUI\Assets\openclaw.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 #if MyAppArch == "arm64"
 ArchitecturesInstallIn64BitMode=arm64
@@ -45,7 +45,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "startupicon"; Description: "Start Moltbot Tray when Windows starts"; GroupDescription: "Startup:"; Flags: unchecked
+Name: "startupicon"; Description: "Start OpenClaw Tray when Windows starts"; GroupDescription: "Startup:"; Flags: unchecked
 Name: "cmdpalette"; Description: "Install PowerToys Command Palette extension"; GroupDescription: "Integrations:"; Flags: unchecked
 
 [Files]
@@ -67,4 +67,4 @@ Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -Command ""Add-
 
 [UninstallRun]
 ; Unregister Command Palette extension on uninstall
-Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -Command ""Get-AppxPackage -Name '*Moltbot*' | Remove-AppxPackage"""; Flags: runhidden
+Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -Command ""Get-AppxPackage -Name '*OpenClaw*' | Remove-AppxPackage"""; Flags: runhidden

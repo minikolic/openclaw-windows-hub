@@ -1,15 +1,15 @@
-# Code Review - Moltbot Windows Hub
+# Code Review - OpenClaw Windows Hub
 
 ## Overview
-This document provides a comprehensive code review of the Moltbot Windows Hub repository, focusing on correctness, security, and best practices.
+This document provides a comprehensive code review of the OpenClaw Windows Hub repository, focusing on correctness, security, and best practices.
 
 ## Executive Summary
 ✅ **Overall Assessment: Good** - The codebase is well-structured with proper separation of concerns, event-driven architecture, and correct async/await patterns. Some potential issues were identified around error handling, reconnection logic, and edge cases.
 
 ## Project Structure
-- **Moltbot.Shared**: WebSocket gateway client and data models (✅ Cross-platform compatible)
-- **Moltbot.Tray**: Windows system tray application (⚠️ Windows-only)
-- **Moltbot.CommandPalette**: PowerToys extension (⚠️ Windows-only)
+- **OpenClaw.Shared**: WebSocket gateway client and data models (✅ Cross-platform compatible)
+- **OpenClaw.Tray**: Windows system tray application (⚠️ Windows-only)
+- **OpenClaw.CommandPalette**: PowerToys extension (⚠️ Windows-only)
 
 ## Code Quality Analysis
 
@@ -282,7 +282,7 @@ All display text generation in Models.cs is correct:
 
 ### ⚠️ Cross-Platform Compatibility
 
-**Moltbot.Shared** is mostly cross-platform, but:
+**OpenClaw.Shared** is mostly cross-platform, but:
 - `SessionInfo.ShortKey` uses `Path.GetFileName()` which behaves differently on Windows vs Linux
 - On Linux, backslashes in paths are NOT treated as separators
 - **Recommendation**: Explicitly replace backslashes before using `Path.GetFileName()`
@@ -349,7 +349,7 @@ if (Key.Contains('/') || Key.Contains('\\'))
 
 ## Conclusion
 
-The Moltbot Windows Hub codebase demonstrates good software engineering practices with proper async/await usage, event-driven architecture, and resource management. The main areas for improvement are:
+The OpenClaw Windows Hub codebase demonstrates good software engineering practices with proper async/await usage, event-driven architecture, and resource management. The main areas for improvement are:
 
 1. **Testing**: Now addressed with 88 unit tests covering core functionality
 2. **Error Handling**: Could be more consistent
