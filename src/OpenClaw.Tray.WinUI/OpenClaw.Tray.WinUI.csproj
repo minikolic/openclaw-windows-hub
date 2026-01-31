@@ -11,6 +11,9 @@
     <ApplicationIcon>Assets\openclaw.ico</ApplicationIcon>
     <RootNamespace>OpenClawTray</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>0.1.0</Version>
+    <FileVersion>0.1.0</FileVersion>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <!-- Bundle Windows App SDK when publishing self-contained -->
