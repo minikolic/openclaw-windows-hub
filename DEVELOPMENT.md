@@ -71,10 +71,12 @@ openclaw-windows-hub/
 ├── .github/workflows/
 │   └── ci.yml                        # GitHub Actions CI/CD workflow
 │
-├── moltbot-windows-hub.slnx          # Solution file
+├── moltbot-windows-hub.slnx          # Solution file (historical name)
 ├── README.md                         # User-facing documentation
 └── DEVELOPMENT.md                    # This file
 ```
+
+> **Note on Naming:** The solution file is named `moltbot-windows-hub.slnx` due to the project's history (formerly known as Moltbot, formerly known as Clawdbot). The repository and current branding use "OpenClaw".
 
 ### Project Dependencies
 
